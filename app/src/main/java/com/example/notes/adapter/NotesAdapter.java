@@ -1,6 +1,7 @@
 package com.example.notes.adapter;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,6 +43,7 @@ public class NotesAdapter  extends RecyclerView.Adapter<NotesAdapter.NotesViewHo
             @Override
             public void onClick(View view) {
                 Bundle data=new Bundle();
+                Log.w("inside adpater",n.notesTitle);
                 data.putInt("id",n.id);
                 data.putString("title",n.notesTitle);
                 data.putString("Notes",n.notesData);

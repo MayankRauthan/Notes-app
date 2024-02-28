@@ -7,6 +7,7 @@ import androidx.room.PrimaryKey;
 public class Notes {
     @PrimaryKey(autoGenerate = true)
     public int id;
+    public String userId;
     public String notesTitle;
     public String notesData;
 

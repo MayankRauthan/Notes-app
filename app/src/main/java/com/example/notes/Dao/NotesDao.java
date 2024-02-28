@@ -12,8 +12,8 @@ import java.util.List;
 
 @Dao
 public interface NotesDao {
-    @Query("Select * from mayank")
-    LiveData<List<Notes>> getAllNodes();
+    @Query("Select * from mayank where userId =:userId")
+    LiveData<List<Notes>> getAllNodes(String userId);
 
     @Insert
     void insertNotes(Notes...notes );

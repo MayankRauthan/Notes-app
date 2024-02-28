@@ -21,9 +21,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.notes.LoggedInUseData.PreferenceManager;
 import com.example.notes.R;
 import com.example.notes.model.Notes;
 import com.example.notes.viewmodel.NotesViewModel;
+import com.example.notes.viewmodel.NotesViewModelFactory;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 /**
@@ -67,7 +69,8 @@ public class UpdateFragment extends Fragment {
         EditText notes = (EditText) view.findViewById(R.id.UpdateNotesEditText);
         title.setText(this.titles);
         notes.setText(this.note);
-        notesViewModel= new ViewModelProvider(getActivity()).get(NotesViewModel.class);
+        notesViewModel = new ViewModelProvider(this, new NotesViewModelFactory(getActivity().getApplication(), new PreferenceManager(requireContext()).getUserId())).get(NotesViewModel.class);
+
         ((FloatingActionButton)view.findViewById(R.id.updatesaveButton)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -87,6 +90,7 @@ public class UpdateFragment extends Fragment {
     private void UpdateNotes(String title, String notes,int id) {
         Notes notes1=new Notes();
         notes1.id=id;
+        notes1.userId=new PreferenceManager(requireContext()).getUserId();
         notes1.notesTitle=title;
         notes1.notesData=notes;
         notesViewModel.updateNotesVM(notes1);

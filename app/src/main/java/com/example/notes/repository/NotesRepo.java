@@ -13,10 +13,10 @@ import java.util.List;
 public class NotesRepo {
     NotesDao notesDao;
     public LiveData<List<Notes>> allnodes;
-    public NotesRepo(Application app) {
+    public NotesRepo(Application app,String userId) {
         NotesDatabase notesDatabase=NotesDatabase.getInstance(app);
          notesDao=notesDatabase.notesDao();
-       allnodes= notesDao.getAllNodes();
+       allnodes= notesDao.getAllNodes(userId);
     }
     public void insertNotes(Notes notes)
     {

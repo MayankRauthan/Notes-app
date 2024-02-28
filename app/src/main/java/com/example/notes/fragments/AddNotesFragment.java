@@ -1,5 +1,7 @@
 package com.example.notes.fragments;
 
+
+
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -14,9 +16,11 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.notes.LoggedInUseData.PreferenceManager;
 import com.example.notes.R;
 import com.example.notes.model.Notes;
 import com.example.notes.viewmodel.NotesViewModel;
+import com.example.notes.viewmodel.NotesViewModelFactory;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 /**
@@ -42,18 +46,17 @@ public class AddNotesFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_add_notes, container, false);
         // Inflate the layout for this fragment
 
 
 
-        return view;
+        return inflater.inflate(R.layout.fragment_add_notes, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View views, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(views, savedInstanceState);
-        notesViewModel= new ViewModelProvider(getActivity()).get(NotesViewModel.class);
+        notesViewModel = new ViewModelProvider(this, new NotesViewModelFactory(getActivity().getApplication(), new PreferenceManager(requireContext()).getUserId())).get(NotesViewModel.class);
         ((FloatingActionButton)views.findViewById(R.id.saveButton)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -74,6 +77,7 @@ public class AddNotesFragment extends Fragment {
         Notes notes1=new Notes();
         notes1.notesTitle=title;
         notes1.notesData=note;
+        notes1.userId= new PreferenceManager(requireContext()).getUserId();
        notesViewModel.insertNotesVM(notes1);
     }
 
